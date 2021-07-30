@@ -4,14 +4,15 @@ import {
   View,
   Text,
   TextInput,
-  TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
 import { useForm } from "react-hook-form";
 
+import { ColorableButton } from "../Components/ColorableButton";
+import { Card } from "../Components/Card";
+
 export const FormularioDePago = () => {
   const { register, formState, handleSubmit, setValue } = useForm();
-
   useEffect(() => {
     register("name", {
       required: true,
@@ -41,7 +42,7 @@ export const FormularioDePago = () => {
 
   return (
     <View style={styles.topContainer}>
-      <View style={styles.card}>
+      <Card>
         {/* Nombre */}
         <View style={styles.inputContainer}>
           <Text style={styles.inputLabel}>Nombre:</Text>
@@ -61,7 +62,10 @@ export const FormularioDePago = () => {
         {/* Edad */}
         <View style={styles.inputContainer}>
           <Text style={styles.inputLabel}>Edad:</Text>
-          <TextInput style={styles.input} onChangeText={text => setValue("age", text)} />
+          <TextInput
+            style={styles.input}
+            onChangeText={(text) => setValue("age", text)}
+          />
           {formState.errors.age ? (
             <Text style={styles.errorLabel}>
               {formState.errors.age.type === "required"
@@ -93,17 +97,17 @@ export const FormularioDePago = () => {
           ) : null}
         </View>
         {/* FIN Correo */}
-        <TouchableOpacity
-          style={styles.button}
+        <ColorableButton
           onPress={handleSubmit(onSubmit)}
         >
-          {formState.isSubmitting  ? <ActivityIndicator color="white" /> : null}
+          {formState.isSubmitting ? <ActivityIndicator color="white" /> : null}
           <Text style={styles.whiteLabel}>Enviar</Text>
-        </TouchableOpacity>
-      </View>
+        </ColorableButton>
+      </Card>
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   topContainer: {
@@ -113,29 +117,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#eee",
   },
-  card: {
-    flex: 1,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
-    elevation: 5,
-    backgroundColor: "#fff",
-    borderRadius: 5,
-    marginBottom: 10,
-    padding: 20,
-    marginHorizontal: 20,
-    width: "auto",
-    alignItems: "stretch",
-  },
-  button: {
-    backgroundColor: "#6600CC",
-    borderRadius: 5,
-    padding: 20,
-    minWidth: 150,
-    alignItems: "center",
-    justifyContent: "center",
-  },
+
   whiteLabel: {
     color: "#fff",
     fontSize: 20,
